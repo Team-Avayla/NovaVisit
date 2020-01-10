@@ -1,0 +1,8 @@
+name: RMCVisit
+main: uk.logibot.visit.Main
+version: ${project.version}
+api-version: '1.13'
+commands:
+  visit:
+    description: Visit a player claim.
+    usage: /visit
