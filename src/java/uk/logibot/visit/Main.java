@@ -11,7 +11,7 @@ import uk.logibot.visit.events.Database;
 import uk.logibot.visit.events.SQLite;
 import uk.logibot.visit.gui.VisitGUI;
 
-import java.io.File;
+import java.util.Objects;
 
 public class Main extends JavaPlugin {
     public static Plugin plugin = null;
@@ -27,7 +27,7 @@ public class Main extends JavaPlugin {
         db.load();
 
         // Commands
-        getCommand("visit").setExecutor(new VisitCMD());
+        Objects.requireNonNull(getCommand("visit")).setExecutor(new VisitCMD());
         PluginManager pm = Bukkit.getPluginManager();
         pm.addPermission(new Permission("rmc.visit"));
         pm.addPermission(new Permission("rmc.visit.create"));

@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import org.apache.commons.lang.StringUtils;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
@@ -12,8 +13,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import uk.logibot.visit.Main;
 import uk.logibot.visit.gui.VisitGUI;
 
@@ -254,7 +253,7 @@ public class VisitCMD implements CommandExecutor {
                     if(args.length > 2 && args[2].matches("^[0-9]*$")) {
                         page = Integer.parseInt(args[2]);
                     }
-                    ArrayList<HashMap<String, String>> warps = null;
+                    ArrayList<HashMap<String, String>> warps;
 
                     if(args.length > 1 && args[1].equalsIgnoreCase("mine")) {
                         warps = Main.db.getWarps(player.getUniqueId(), true);
@@ -337,9 +336,6 @@ public class VisitCMD implements CommandExecutor {
             return false; // not transparent (will suffocate)
         }
         Block ground = feet.getRelative(BlockFace.DOWN);
-        if (!ground.getType().isSolid()) {
-            return false; // not solid
-        }
-        return true;
+        return ground.getType().isSolid(); // not solid
     }
 }
