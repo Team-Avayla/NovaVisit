@@ -45,7 +45,7 @@
         <outputDirectory>target/classes</outputDirectory>
         <sourceDirectory>${basedir}/src/java</sourceDirectory>
 
-        <finalName>${project.artifactId}</finalName>
+        <finalName>TRVisit</finalName>
 
         <resources>
             <resource>

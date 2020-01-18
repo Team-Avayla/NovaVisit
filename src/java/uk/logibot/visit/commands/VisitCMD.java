@@ -123,8 +123,17 @@ public class VisitCMD implements CommandExecutor {
                     HashMap<String, String> warp = Main.db.getWarp(visitName);
                     if(warp != null) {
                         if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("rmc.visit.admin.move")) {
-                            Main.db.setLocation(warp.get("name"), player.getLocation());
-                            sender.sendMessage(prefix + "§aYou moved warp named §f" + warp.get("name"));
+                            Claim claim = GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), true, null);
+                            if (claim != null) {
+                                if (claim.ownerID.equals(player.getUniqueId())) {
+                                    Main.db.setLocation(warp.get("name"), player.getLocation());
+                                    sender.sendMessage(prefix + "§aYou moved warp named §f" + warp.get("name"));
+                                } else {
+                                    sender.sendMessage(prefix + "§cYou can only set a warp in your claim!");
+                                }
+                            } else {
+                                sender.sendMessage(prefix + "§cYou can only set a warp in your claim!");
+                            }
                         } else {
                             sender.sendMessage(prefix + "§cYou cannot move someone else's warp!");
                         }
