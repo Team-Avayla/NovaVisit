@@ -86,7 +86,7 @@ public abstract class Database {
                 wp.put("open", String.valueOf(rs.getInt("open") == 1));
                 wp.put("uuid", rs.getString("uuid"));
                 wp.put("locYaw", rs.getString("locYaw"));
-                wp.put("locPitch", rs.getString("locYaw"));
+                wp.put("locPitch", rs.getString("locPitch"));
                 return wp;
             }
         } catch (SQLException ex) {
@@ -148,7 +148,7 @@ public abstract class Database {
                 ps.setString(1, name);
                 rs = ps.executeQuery();
                 while (rs.next()) {
-                    return new Location(Bukkit.getWorld(rs.getString("locWorld")), rs.getDouble("locX"), rs.getDouble("locY"), rs.getDouble("locZ"));
+                    return new Location(Bukkit.getWorld(rs.getString("locWorld")), rs.getDouble("locX"), rs.getDouble("locY"), rs.getDouble("locZ"), rs.getFloat("locYaw"), rs.getFloat("locPitch"));
                 }
             } catch (SQLException ex) {
                 plugin.getLogger().log(Level.SEVERE, "Couldn't execute MySQL statement: ", ex);
@@ -222,8 +222,8 @@ public abstract class Database {
             ps.setDouble(2, l.getX());
             ps.setDouble(3, l.getY());
             ps.setDouble(4, l.getZ());
-            ps.setFloat(6, l.getPitch());
-            ps.setFloat(5, l.getYaw());
+            ps.setFloat(5, l.getPitch());
+            ps.setFloat(6, l.getYaw());
             ps.setString(7, name);
             ps.executeUpdate();
         } catch (SQLException ex) {
@@ -271,6 +271,35 @@ public abstract class Database {
                 ps.setString(2, uuid.toString());
                 ps.setLong(3, System.currentTimeMillis());
                 ps.setInt(4, 1);
+            }
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            plugin.getLogger().log(Level.SEVERE, "Couldn't execute MySQL statement: ", ex);
+        } finally {
+            try {
+                if (ps != null)
+                    ps.close();
+            } catch (SQLException ex) {
+                plugin.getLogger().log(Level.SEVERE, "Failed to close MySQL connection: ", ex);
+            }
+        }
+    }
+
+    public void setVotes(UUID uuid, String name, Integer votes) {
+        PreparedStatement ps = null;
+        try {
+            if(getLastVote(uuid, name) != null) {
+                ps = connection.prepareStatement("UPDATE " + vtable + " SET last_vote=?, votes=? WHERE name=? AND uuid=?;");
+                ps.setLong(1, System.currentTimeMillis());
+                ps.setInt(2, votes);
+                ps.setString(3, name);
+                ps.setString(4, uuid.toString());
+            } else {
+                ps = connection.prepareStatement("INSERT INTO " + vtable + " (name, uuid, last_vote, votes) VALUES (?, ?, ?, ?);");
+                ps.setString(1, name);
+                ps.setString(2, uuid.toString());
+                ps.setLong(3, System.currentTimeMillis());
+                ps.setInt(4, votes);
             }
             ps.executeUpdate();
         } catch (SQLException ex) {
