@@ -1,10 +1,7 @@
 package uk.logibot.visit.gui;
 
 import com.google.common.collect.Lists;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,7 +48,12 @@ public class VisitGUI implements Listener {
             for (int i = 0; i < pages.get(page - 1).size(); i++) {
                 HashMap<String, String> value = pages.get(page - 1).get(i);
 
-                ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
+                ItemStack skull = null;
+                if (Bukkit.getVersion().contains("1.13.") || Bukkit.getVersion().contains("1.14.") || Bukkit.getVersion().contains("1.15.") || Bukkit.getVersion().contains("1.16.")) {
+                    skull = new ItemStack(Material.PLAYER_HEAD);
+                } else {
+                    skull = new ItemStack(Material.getMaterial("SKULL_ITEM"), 1, (short) SkullType.PLAYER.ordinal());
+                }
                 SkullMeta skMeta = (SkullMeta) skull.getItemMeta();
                 skMeta.setDisplayName(ChatColor.GREEN + value.get("name"));
                 OfflinePlayer skplayer = Bukkit.getOfflinePlayer(UUID.fromString(value.get("uuid")));
@@ -85,7 +87,7 @@ public class VisitGUI implements Listener {
                     } else if (clickedName.equals(ChatColor.GREEN + "Next")) {
                         openGUI(player, cPage.get(player.getUniqueId()) + 1);
                     }
-                } else if(clickedType == Material.PLAYER_HEAD) {
+                } else if(clickedType == Material.PLAYER_HEAD || clickedType == Material.getMaterial("SKULL_ITEM")) {
                     player.closeInventory();
                     player.chat("/visit " + ChatColor.stripColor(clickedName));
                 }
