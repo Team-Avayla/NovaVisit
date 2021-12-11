@@ -48,8 +48,8 @@ public class VisitGUI implements Listener {
             for (int i = 0; i < pages.get(page - 1).size(); i++) {
                 HashMap<String, String> value = pages.get(page - 1).get(i);
 
-                ItemStack skull = null;
-                if (Bukkit.getVersion().contains("1.13.") || Bukkit.getVersion().contains("1.14.") || Bukkit.getVersion().contains("1.15.") || Bukkit.getVersion().contains("1.16.")) {
+                ItemStack skull;
+                if (Bukkit.getVersion().contains("1.13.") || Bukkit.getVersion().contains("1.14.") || Bukkit.getVersion().contains("1.15.") || Bukkit.getVersion().contains("1.16.") || Bukkit.getVersion().contains("1.17.") || Bukkit.getVersion().contains("1.18.")) {
                     skull = new ItemStack(Material.PLAYER_HEAD);
                 } else {
                     skull = new ItemStack(Material.getMaterial("SKULL_ITEM"), 1, (short) SkullType.PLAYER.ordinal());
