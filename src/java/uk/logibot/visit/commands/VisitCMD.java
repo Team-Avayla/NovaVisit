@@ -36,7 +36,7 @@ public class VisitCMD implements CommandExecutor {
             if(sender instanceof Player) {
                 String prefix = "§8[§bVisits§8] ";
 
-                if(!sender.hasPermission("rmc.visit")) {
+                if(!sender.hasPermission("novavisit")) {
                     sender.sendMessage(prefix + "§4You cannot use this command!");
                     return true;
                 }
@@ -59,7 +59,7 @@ public class VisitCMD implements CommandExecutor {
                         "§6/visit §7votebonus §e<name> <amount>§f: Set bonus votes for a warp."
                     );
                 } else if(args[0].equalsIgnoreCase("create")) {
-                    if(!sender.hasPermission("rmc.visit.create")) {
+                    if(!sender.hasPermission("novavisit.create")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -80,7 +80,7 @@ public class VisitCMD implements CommandExecutor {
                     if(warpCount > 0) {
                         int maxWarps = 1;
                         for (int i = 10; i-- > 0; ) {
-                            if(sender.hasPermission("rmc.visit.create.multiple." + i) && i > maxWarps) {
+                            if(sender.hasPermission("novavisit.create.multiple." + i) && i > maxWarps) {
                                 maxWarps = i;
                             }
                         }
@@ -93,13 +93,13 @@ public class VisitCMD implements CommandExecutor {
                     HashMap<String, String> warp = Main.db.getWarp(visitName);
                     if(warp == null) {
                         Claim claim = GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), true, null);
-                        if(claim == null && !player.hasPermission("rmc.visit.location.wild")) {
+                        if(claim == null && !player.hasPermission("novavisit.location.wild")) {
                             sender.sendMessage(prefix + "§cYou cannot set warps in wilderness!");
                             return true;
-                        } else if (claim != null && claim.getOwnerName().equals("an administrator") && !player.hasPermission("rmc.visit.location.admin")) {
+                        } else if (claim != null && claim.getOwnerName().equals("an administrator") && !player.hasPermission("novavisit.location.admin")) {
                             sender.sendMessage(prefix + "§cYou cannot set warps in admin claims!");
                             return true;
-                        } else if (claim != null && !claim.getOwnerName().equals("an administrator") && !claim.ownerID.equals(player.getUniqueId()) && !player.hasPermission("rmc.visit.location.others")) {
+                        } else if (claim != null && !claim.getOwnerName().equals("an administrator") && !claim.ownerID.equals(player.getUniqueId()) && !player.hasPermission("novavisit.location.others")) {
                             sender.sendMessage(prefix + "§cYou cannot set warps in others claims!");
                             return true;
                         }
@@ -114,7 +114,7 @@ public class VisitCMD implements CommandExecutor {
                         sender.sendMessage(prefix + "§cA warp named §f" + warp.get("name") + " §calready exists!");
                     }
                 } else if(args[0].equalsIgnoreCase("delete")) {
-                    if(!sender.hasPermission("rmc.visit.delete")) {
+                    if(!sender.hasPermission("novavisit.delete")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -127,7 +127,7 @@ public class VisitCMD implements CommandExecutor {
 
                     HashMap<String, String> warp = Main.db.getWarp(visitName);
                     if(warp != null) {
-                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("rmc.visit.delete.others")) {
+                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("novavisit.delete.others")) {
                             sender.sendMessage(prefix + "§aYou deleted warp named §f" + warp.get("name"));
                             Main.db.deleteWarp(warp.get("name"));
                         } else {
@@ -137,7 +137,7 @@ public class VisitCMD implements CommandExecutor {
                         sender.sendMessage(prefix + "§cCould not find a warp named §f" + visitName + "§c!");
                     }
                 } else if(args[0].equalsIgnoreCase("open")) {
-                    if(!sender.hasPermission("rmc.visit.open")) {
+                    if(!sender.hasPermission("novavisit.open")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -150,7 +150,7 @@ public class VisitCMD implements CommandExecutor {
 
                     HashMap<String, String> warp = Main.db.getWarp(visitName);
                     if(warp != null) {
-                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("rmc.visit.open.others")) {
+                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("novavisit.open.others")) {
                             if(warp.get("open").equals("false")) {
                                 Main.db.setOpen(warp.get("name"), true);
                                 sender.sendMessage(prefix + "§aYou opened warp named §f" + warp.get("name"));
@@ -164,7 +164,7 @@ public class VisitCMD implements CommandExecutor {
                         sender.sendMessage(prefix + "§cCould not find a warp named §f" + visitName + "§c!");
                     }
                 } else if(args[0].equalsIgnoreCase("close")) {
-                    if(!sender.hasPermission("rmc.visit.close")) {
+                    if(!sender.hasPermission("novavisit.close")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -177,7 +177,7 @@ public class VisitCMD implements CommandExecutor {
 
                     HashMap<String, String> warp = Main.db.getWarp(visitName);
                     if(warp != null) {
-                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("rmc.visit.close.others")) {
+                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("novavisit.close.others")) {
                             if (warp.get("open").equals("true")) {
                                 Main.db.setOpen(warp.get("name"), false);
                                 sender.sendMessage(prefix + "§aYou closed warp named §f" + warp.get("name"));
@@ -191,7 +191,7 @@ public class VisitCMD implements CommandExecutor {
                         sender.sendMessage(prefix + "§cCould not find a warp named §f" + visitName + "§c!");
                     }
                 } else if(args[0].equalsIgnoreCase("move")) {
-                    if(!sender.hasPermission("rmc.visit.move")) {
+                    if(!sender.hasPermission("novavisit.move")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -204,15 +204,15 @@ public class VisitCMD implements CommandExecutor {
 
                     HashMap<String, String> warp = Main.db.getWarp(visitName);
                     if(warp != null) {
-                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("rmc.visit.move.others")) {
+                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("novavisit.move.others")) {
                             Claim claim = GriefPrevention.instance.dataStore.getClaimAt(player.getLocation(), true, null);
-                            if(claim == null && !player.hasPermission("rmc.visit.location.wild")) {
+                            if(claim == null && !player.hasPermission("novavisit.location.wild")) {
                                 sender.sendMessage(prefix + "§cYou cannot set warps in wilderness!");
                                 return true;
-                            } else if (claim != null && claim.getOwnerName().equals("an administrator") && !player.hasPermission("rmc.visit.location.admin")) {
+                            } else if (claim != null && claim.getOwnerName().equals("an administrator") && !player.hasPermission("novavisit.location.admin")) {
                                 sender.sendMessage(prefix + "§cYou cannot set warps in admin claims!");
                                 return true;
-                            } else if (claim != null && !claim.getOwnerName().equals("an administrator") && !claim.ownerID.equals(player.getUniqueId()) && !player.hasPermission("rmc.visit.location.others")) {
+                            } else if (claim != null && !claim.getOwnerName().equals("an administrator") && !claim.ownerID.equals(player.getUniqueId()) && !player.hasPermission("novavisit.location.others")) {
                                 sender.sendMessage(prefix + "§cYou cannot set warps in others claims!");
                                 return true;
                             }
@@ -226,7 +226,7 @@ public class VisitCMD implements CommandExecutor {
                         sender.sendMessage(prefix + "§cCould not find a warp named §f" + visitName + "§c!");
                     }
                 } else if(args[0].equalsIgnoreCase("rename")) {
-                    if(!sender.hasPermission("rmc.visit.rename")) {
+                    if(!sender.hasPermission("novavisit.rename")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -247,7 +247,7 @@ public class VisitCMD implements CommandExecutor {
 
                     HashMap<String, String> warp = Main.db.getWarp(visitName);
                     if(warp != null) {
-                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("rmc.visit.rename.others")) {
+                        if(warp.get("uuid").equals(player.getUniqueId().toString()) || player.hasPermission("novavisit.rename.others")) {
                             Main.db.setName(warp.get("name"), newName);
                             sender.sendMessage(prefix + "§aYou renamed warp §f" + warp.get("name") + " §ato §f" + newName);
                         } else {
@@ -257,7 +257,7 @@ public class VisitCMD implements CommandExecutor {
                         sender.sendMessage(prefix + "§cCould not find a warp named §f" + visitName + "§c!");
                     }
                 } else if(args[0].equalsIgnoreCase("vote")) {
-                    if(!sender.hasPermission("rmc.visit.vote")) {
+                    if(!sender.hasPermission("novavisit.vote")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -294,7 +294,7 @@ public class VisitCMD implements CommandExecutor {
                         sender.sendMessage(prefix + "§cCould not find a warp named §f" + visitName + "§c!");
                     }
                 } else if(args[0].equalsIgnoreCase("list")) {
-                    if(!sender.hasPermission("rmc.visit.list")) {
+                    if(!sender.hasPermission("novavisit.list")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -330,7 +330,7 @@ public class VisitCMD implements CommandExecutor {
                         sender.sendMessage(prefix + "§cThere are no avaliable warps.");
                     }
                 } else if(args[0].equalsIgnoreCase("votebonus")) {
-                    if(!sender.hasPermission("rmc.visit.votebonus")) {
+                    if(!sender.hasPermission("novavisit.votebonus")) {
                         sender.sendMessage(prefix + "§4You cannot use this command!");
                         return true;
                     }
@@ -361,15 +361,15 @@ public class VisitCMD implements CommandExecutor {
                     Location warploc = Main.db.getLocation(warp.get("name"));
 
                     Claim claim = GriefPrevention.instance.dataStore.getClaimAt(warploc, true, null);
-                    if(claim == null && !hasPermission(UUID.fromString(warp.get("uuid")), "rmc.visit.location.wild")) {
+                    if(claim == null && !hasPermission(UUID.fromString(warp.get("uuid")), "novavisit.location.wild")) {
                         Main.db.deleteWarp(warp.get("name"));
                         sender.sendMessage(prefix + "§cDeleted warp due to being in disallowed area!");
                         return true;
-                    } else if (claim != null && claim.getOwnerName().equals("an administrator") && !hasPermission(UUID.fromString(warp.get("uuid")), "rmc.visit.location.admin")) {
+                    } else if (claim != null && claim.getOwnerName().equals("an administrator") && !hasPermission(UUID.fromString(warp.get("uuid")), "novavisit.location.admin")) {
                         Main.db.deleteWarp(warp.get("name"));
                         sender.sendMessage(prefix + "§cDeleted warp due to being in disallowed area!");
                         return true;
-                    } else if (claim != null && !claim.getOwnerName().equals("an administrator") && !claim.ownerID.equals(UUID.fromString(warp.get("uuid"))) && !hasPermission(UUID.fromString(warp.get("uuid")), "rmc.visit.location.others")) {
+                    } else if (claim != null && !claim.getOwnerName().equals("an administrator") && !claim.ownerID.equals(UUID.fromString(warp.get("uuid"))) && !hasPermission(UUID.fromString(warp.get("uuid")), "novavisit.location.others")) {
                         Main.db.deleteWarp(warp.get("name"));
                         sender.sendMessage(prefix + "§cDeleted warp due to being in disallowed area!");
                         return true;
