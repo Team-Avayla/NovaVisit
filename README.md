@@ -1,4 +1,4 @@
-# TRVisit
+# NovaVisit
 A plugin for spigot that adds player warps.
 
 ## Authors
