@@ -29,25 +29,25 @@ public class Main extends JavaPlugin {
         // Commands
         Objects.requireNonNull(getCommand("visit")).setExecutor(new VisitCMD());
         PluginManager pm = Bukkit.getPluginManager();
-        pm.addPermission(new Permission("rmc.visit"));
-        pm.addPermission(new Permission("rmc.visit.create"));
-        pm.addPermission(new Permission("rmc.visit.create.multiple.*"));
-        pm.addPermission(new Permission("rmc.visit.delete"));
-        pm.addPermission(new Permission("rmc.visit.delete.others"));
-        pm.addPermission(new Permission("rmc.visit.open"));
-        pm.addPermission(new Permission("rmc.visit.open.others"));
-        pm.addPermission(new Permission("rmc.visit.close"));
-        pm.addPermission(new Permission("rmc.visit.close.others"));
-        pm.addPermission(new Permission("rmc.visit.move"));
-        pm.addPermission(new Permission("rmc.visit.move.others"));
-        pm.addPermission(new Permission("rmc.visit.rename"));
-        pm.addPermission(new Permission("rmc.visit.rename.others"));
-        pm.addPermission(new Permission("rmc.visit.vote"));
-        pm.addPermission(new Permission("rmc.visit.votebonus"));
-        pm.addPermission(new Permission("rmc.visit.list"));
-        pm.addPermission(new Permission("rmc.visit.location.others"));
-        pm.addPermission(new Permission("rmc.visit.location.wild"));
-        pm.addPermission(new Permission("rmc.visit.location.admin"));
+        pm.addPermission(new Permission("novavisit"));
+        pm.addPermission(new Permission("novavisit.create"));
+        pm.addPermission(new Permission("novavisit.create.multiple.*"));
+        pm.addPermission(new Permission("novavisit.delete"));
+        pm.addPermission(new Permission("novavisit.delete.others"));
+        pm.addPermission(new Permission("novavisit.open"));
+        pm.addPermission(new Permission("novavisit.open.others"));
+        pm.addPermission(new Permission("novavisit.close"));
+        pm.addPermission(new Permission("novavisit.close.others"));
+        pm.addPermission(new Permission("novavisit.move"));
+        pm.addPermission(new Permission("novavisit.move.others"));
+        pm.addPermission(new Permission("novavisit.rename"));
+        pm.addPermission(new Permission("novavisit.rename.others"));
+        pm.addPermission(new Permission("novavisit.vote"));
+        pm.addPermission(new Permission("novavisit.votebonus"));
+        pm.addPermission(new Permission("novavisit.list"));
+        pm.addPermission(new Permission("novavisit.location.others"));
+        pm.addPermission(new Permission("novavisit.location.wild"));
+        pm.addPermission(new Permission("novavisit.location.admin"));
 
         pm.registerEvents(new VisitGUI(), this);
     }
@@ -57,24 +57,24 @@ public class Main extends JavaPlugin {
         plugin = null;
 
         PluginManager pm = Bukkit.getPluginManager();
-        pm.removePermission(new Permission("rmc.visit"));
-        pm.removePermission(new Permission("rmc.visit.create"));
-        pm.removePermission(new Permission("rmc.visit.create.multiple.*"));
-        pm.removePermission(new Permission("rmc.visit.delete"));
-        pm.removePermission(new Permission("rmc.visit.delete.others"));
-        pm.removePermission(new Permission("rmc.visit.open"));
-        pm.removePermission(new Permission("rmc.visit.open.others"));
-        pm.removePermission(new Permission("rmc.visit.close"));
-        pm.removePermission(new Permission("rmc.visit.close.others"));
-        pm.removePermission(new Permission("rmc.visit.move"));
-        pm.removePermission(new Permission("rmc.visit.move.others"));
-        pm.removePermission(new Permission("rmc.visit.rename"));
-        pm.removePermission(new Permission("rmc.visit.rename.others"));
-        pm.removePermission(new Permission("rmc.visit.vote"));
-        pm.removePermission(new Permission("rmc.visit.votebonus"));
-        pm.removePermission(new Permission("rmc.visit.list"));
-        pm.removePermission(new Permission("rmc.visit.location.others"));
-        pm.removePermission(new Permission("rmc.visit.location.wild"));
-        pm.removePermission(new Permission("rmc.visit.location.admin"));
+        pm.removePermission(new Permission("novavisit"));
+        pm.removePermission(new Permission("novavisit.create"));
+        pm.removePermission(new Permission("novavisit.create.multiple.*"));
+        pm.removePermission(new Permission("novavisit.delete"));
+        pm.removePermission(new Permission("novavisit.delete.others"));
+        pm.removePermission(new Permission("novavisit.open"));
+        pm.removePermission(new Permission("novavisit.open.others"));
+        pm.removePermission(new Permission("novavisit.close"));
+        pm.removePermission(new Permission("novavisit.close.others"));
+        pm.removePermission(new Permission("novavisit.move"));
+        pm.removePermission(new Permission("novavisit.move.others"));
+        pm.removePermission(new Permission("novavisit.rename"));
+        pm.removePermission(new Permission("novavisit.rename.others"));
+        pm.removePermission(new Permission("novavisit.vote"));
+        pm.removePermission(new Permission("novavisit.votebonus"));
+        pm.removePermission(new Permission("novavisit.list"));
+        pm.removePermission(new Permission("novavisit.location.others"));
+        pm.removePermission(new Permission("novavisit.location.wild"));
+        pm.removePermission(new Permission("novavisit.location.admin"));
     }
 }
